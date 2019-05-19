@@ -3,8 +3,8 @@ const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const Product = require("../src/Product");
 
-// const dbUrl = "mongodb://127.0.0.1:27017/monolithDB";
-const dbUrl = "mongodb://10.0.0.166:27017/productDB";
+const dbUrl = "mongodb://productDB:27017/productDB";
+// const dbUrl = "mongodb://10.0.0.166:27017/productDB";
 const productCollectionName="product";
 
 const numPopulateItems = 1000;
