@@ -5,13 +5,14 @@ const assert = require("assert");
 const Product = require('../src/Product');
 const util = require('../src/util');
 
+
 let reqcounter = 0;
 let nextProductId = 0;
 
 router.post('/edit', function(req, res) {
     reqcounter++;
 
-    let randomId = Math.floor((Math.random() * 100)).toString();
+    let randomId = Math.floor((Math.random() * util.numPopulateItems-1)).toString();
     let randomType = Math.floor((Math.random() * 10)).toString();
     let product = new Product(
         req.body.name+randomId,
@@ -24,11 +25,26 @@ router.post('/edit', function(req, res) {
     });
 });
 
+//without URL Parameter for random Product retrieval
 router.get('/get', function(req, res) {
     reqcounter++;
-    let random = Math.floor((Math.random() * 100)).toString();
+    let random = Math.floor((Math.random() * util.numPopulateItems-1)).toString();
 
     findProductById(random, function(dbResponse){
+        if(dbResponse != null ){
+            res.json(dbResponse);
+        }
+        else{
+            res.status(400).end();
+        }
+    });
+});
+
+//with URL Parameter for usage with shoppingCart service
+router.get('/get/:productId', function(req, res) {
+    reqcounter++;
+
+    findProductById(req.params.productId, function(dbResponse){
         if(dbResponse != null ){
             res.json(dbResponse);
         }

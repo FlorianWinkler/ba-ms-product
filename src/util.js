@@ -4,8 +4,10 @@ const assert = require("assert");
 const Product = require("../src/Product");
 
 // const dbUrl = "mongodb://127.0.0.1:27017/monolithDB";
-const dbUrl = "mongodb://10.0.0.156:27017/productDB";
+const dbUrl = "mongodb://10.0.0.166:27017/productDB";
 const productCollectionName="product";
+
+const numPopulateItems = 1000;
 
 let hostname = "unknown_host";
 let mongodbConn=null;
@@ -74,7 +76,7 @@ function populateDB() {
     });
 
     function insertNextProduct() {
-        if (nextProductId < 100) {
+        if (nextProductId < numPopulateItems) {
             productCollection.updateOne(
                 {_id: nextProductId.toString()},
                 {$set: {product: (new Product("Product" + nextProductId, "Product" + nextProductId, nextProductId, Math.floor((Math.random() * 10) + 1)))}},
@@ -96,5 +98,6 @@ module.exports = {
     prepareDatabase: prepareDatabase,
     setHostname: setHostname,
     getHostname: getHostname,
-    productCollectionName: productCollectionName
+    productCollectionName: productCollectionName,
+    numPopulateItems: numPopulateItems
 };
