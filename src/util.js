@@ -3,11 +3,12 @@ const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const Product = require("../src/Product");
 
-const dbUrl = "mongodb://productDB:27017/productDB";
-// const dbUrl = "mongodb://10.0.0.166:27017/productDB";
-const productCollectionName="product";
+// const dbUrl = "mongodb://productDB:27017/productDB";
+const dbUrl = "mongodb://10.0.0.166:27017/productDB";
 
 const numPopulateItems = 1000;
+const numTenants = 5;
+const tenantBaseString = "tenant";
 
 let hostname = "unknown_host";
 let mongodbConn=null;
@@ -68,9 +69,10 @@ function getHostname(){
 function populateDB() {
     let productCollection;
     let nextProductId = 0;
+    let nextTenantId = 0;
 
 //--------insert Products--------
-    getDatabaseCollection(productCollectionName, function (collection) {
+    getDatabaseCollection(tenantBaseString+nextTenantId, function (collection) {
         productCollection = collection;
         insertNextProduct()
     });
@@ -86,7 +88,19 @@ function populateDB() {
                     insertNextProduct();
                 });
         } else {
-            console.log("Products inserted");
+            nextTenantId++;
+            if(nextTenantId<numTenants) {
+                console.log("Products inserted for " + tenantBaseString + nextTenantId);
+                nextProductId = 0;
+                getDatabaseCollection(tenantBaseString + nextTenantId, function (collection) {
+                        productCollection = collection;
+                        insertNextProduct();
+                    }
+                );
+            }
+            else{
+                console.log("Finished Product insert");
+            }
         }
     }
 }
@@ -98,6 +112,7 @@ module.exports = {
     prepareDatabase: prepareDatabase,
     setHostname: setHostname,
     getHostname: getHostname,
-    productCollectionName: productCollectionName,
-    numPopulateItems: numPopulateItems
+    numPopulateItems: numPopulateItems,
+    tenantBaseString: tenantBaseString,
+    numTenants: numTenants
 };
