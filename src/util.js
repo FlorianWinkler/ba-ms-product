@@ -4,7 +4,7 @@ const assert = require("assert");
 const Product = require("../src/Product");
 
 // const dbUrl = "mongodb://productDB:27017/productDB";
-const dbUrl = "mongodb://10.0.0.166:27017/productDB";
+const dbUrl = "mongodb://10.0.0.166:27017/productdb";
 
 const numPopulateItems = 1000;
 const numTenants = 5;
@@ -88,10 +88,10 @@ function populateDB() {
                     insertNextProduct();
                 });
         } else {
-            nextTenantId++;
-            if(nextTenantId<numTenants) {
+            if(nextTenantId<numTenants-1) {
                 console.log("Products inserted for " + tenantBaseString + nextTenantId);
                 nextProductId = 0;
+                nextTenantId++;
                 getDatabaseCollection(tenantBaseString + nextTenantId, function (collection) {
                         productCollection = collection;
                         insertNextProduct();
@@ -99,6 +99,7 @@ function populateDB() {
                 );
             }
             else{
+                console.log("Products inserted for " + tenantBaseString + nextTenantId);
                 console.log("Finished Product insert");
             }
         }

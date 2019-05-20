@@ -20,7 +20,7 @@ router.post('/edit', function(req, res) {
         req.body.description+randomId,
         randomId,
         randomType);
-    console.log(randomTenant);
+    // console.log(randomTenant);
     upsertProduct(randomId, randomTenant, product, function (upsertedProduct) {
         res.json(upsertedProduct);
     });
@@ -31,7 +31,7 @@ router.get('/get', function(req, res) {
     reqcounter++;
     let randomProductId = Math.floor((Math.random() * util.numPopulateItems-1)).toString();
     let randomTenant = util.tenantBaseString+Math.floor((Math.random() * util.numTenants));
-    console.log("Tenant: "+randomTenant);
+    // console.log("Tenant: "+randomTenant);
     findProductById(randomProductId, randomTenant, function(dbResponse){
         if(dbResponse != null ){
             res.json(dbResponse);
