@@ -9,6 +9,15 @@ const util = require('../src/util');
 let reqcounter = 0;
 let nextProductId = 0;
 
+router.get('/', function(req, res, next) {
+    res.send('Product Service running!');
+});
+
+router.get('/preparedb', function(req, res, next) {
+    util.prepareDatabase();
+    res.status(200).end();
+});
+
 router.post('/edit', function(req, res) {
     reqcounter++;
 
