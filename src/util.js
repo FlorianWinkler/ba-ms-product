@@ -7,7 +7,7 @@ const dbUrl = "mongodb://ba-ms-productdb-svc:27017/productdb";
 // const dbUrl = "mongodb://10.0.0.166:27017/productdb";
 
 const numPopulateItems = 1000;
-const numTenants = 5;
+const numTenants = 1;
 const tenantBaseString = "tenant";
 
 let hostname = "unknown_host";
@@ -16,7 +16,7 @@ let mongodbConn=null;
 
 setHostname();
 //wait one second until mongoDB has started properly, before retrieving DB connection
-// setTimeout(prepareDatabase,1000);
+setTimeout(prepareDatabase,1000);
 
 function getDatabaseConnection(callback) {
     if (mongodbConn == null) {
