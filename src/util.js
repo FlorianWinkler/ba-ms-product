@@ -15,7 +15,7 @@ let mongodbConn=null;
 
 
 setHostname();
-//wait one second until mongoDB has started properly, before retrieving DB connection
+// wait one second until mongoDB has started properly, before retrieving DB connection
 setTimeout(prepareDatabase,1000);
 
 function getDatabaseConnection(callback) {
