@@ -7,7 +7,7 @@ const dbUrl = "mongodb://ba-ms-productdb-svc:27017/productdb";
 // const dbUrl = "mongodb://10.0.0.206:27017/productdb";
 
 const numPopulateItems = 1000;
-const numTenants = 1;
+const numTenants = 3;
 const tenantBaseString = "tenant";
 
 let hostname = "unknown_host";
