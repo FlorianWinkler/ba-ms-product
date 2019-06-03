@@ -18,6 +18,15 @@ router.get('/preparedb', function(req, res, next) {
     res.send('Populating Product DB...');
 });
 
+router.get('/getconfig', function(req, res, next) {
+    res.json({
+        hostname: util.getHostname(),
+        numTenants: util.numTenants,
+        numPopulateItems: util.numPopulateItems,
+        tenantBaseString: util.tenantBaseString
+    });
+});
+
 router.post('/edit', function(req, res) {
     reqcounter++;
 
